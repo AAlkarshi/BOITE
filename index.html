@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" >
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Document</title>
+</head>
+<body>
+	
+
+<div id="board"></div>
+
+	<script> 
+
+		//FONCTION
+		function shuffleChildren(parent){
+			let children = parent.children
+			let i = children.length,k,temp
+			while(--i > 0){
+
+		// Math.floor Arrondi au + bas
+			k = Math.floor(Math.random() * (i+1))
+			temp = children[k]
+		// remplace l'élement à la place k par l'element i
+			children[k] = children[i]
+		//k à la fin
+			parent.appendChild(temp)
+
+			}
+		}
+
+
+	
+	 	const box = document.createElement("div")
+		box.classList.add("box")
+
+// appendChild() placer un élément à la fin du contenu de l'élément visé.
+		const board = document.querySelector("#board")
+
+		let nb = 1
+
+		for (let i = 1; i <= 5; i++) {
+			//Copie du Clone
+			const newbox = box.cloneNode()
+			newbox.innerText = i
+			board.appendChild(newbox)
+
+/* 
+addEventListener est d'ajouter un écouteur d'évènement sur l'élément,
+il exécutera une fonction callback dès lors que cet évènement survient sur l'élément.
+*/
+
+// EVENEMENT MSG Apparition Quand l'user cliquera
+			newbox.addEventListener("click" , function(){
+				console.log("Boite n°" + i +" , click !")
+				if (i == nb) {
+					newbox.classList.add("box-valid")
+					if (nb == board.children.length) {
+						alert("VICTOIRE !")
+					}
+					nb++
+				}
+				else if (i > nb) {
+					alert("Erreur, recommencez !")
+					nb = 1
+
+		/* 
+		La fonction callback à l'intérieur de forEach() supprime la classe CSS "boxvalid" des attributs de la boite courante "validBox", reprenant son aspect initial.
+		*/
+			board.querySelectorAll(".box-valid").forEach(function(validBox){
+				validBox.classList.remove("box-valid")
+			})
+				}
+				else{
+					alert("Case déja cliquée !")
+				}
+
+			})
+		}
+				
+				
+			
+
+
+		shuffleChildren(board)
+
+
+
+
+	</script>
+
+</body>
+</html>
